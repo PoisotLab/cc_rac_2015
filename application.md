@@ -10,9 +10,13 @@ Species interactions form the backbone on ecosystems. Recent empirical and theor
 
 The research projects for which I submit this application will focus on the following question: *how does the spatial variation of species presence/absence interacts with the spatial variation of species interactions to determine local community structure*. Some of my previous research showed that (i) there is no relationship between the drivers of species distribution and of interactions distributions and (ii) some ecological systems vary at higher rates than other as a function of the lifestyle of organisms. Empirical work -- either the collection of new data, or the re-analysis of existing datasets -- has been hampered by the fact that there is currently no statistical framework to adress these questions; while it is possible to *describe* the variation of species interactions, *testing* how significant it is from chance expectation cannot be done for lack of proper methodology.
 
-
-
 **Methodology**
+
+Null models -- describe
+
+Using spatially or temporally replicated species interaction networks, we will first implement efficient species distribution and species interaction null models. Some of my previous research suggested that (i) species interaction networks are intrinsically hard (computationaly) to randomize, requiring to develop efficient permutation strategies, and (ii) there is a long tail of un-commonly observed / un-commonly interacting species, requiring exhaustive sampling of the parameter space to properly capture.
+
+In additio, because the observation of species interaction networks (locally) is the result of several ecological processes (joint absence of species, then interaction), there is a need to implement different scenarios for analysis.
 
 **Timeline**
 
@@ -20,19 +24,23 @@ The research projects for which I submit this application will focus on the foll
 
 # Technical justification
 
-The problem we tackle is by desgin embarassingly parallel. As such, we are less concerned with continued access to moderate number of cores, than we are with short-term access to a large number of cores.
+The problem we tackle is by design embarassingly parallel: each replicate of each model on each dataset is a single process. As such, we are less concerned with continued access to a moderate number of cores, than we are with short-term access to a large number of cores on which to launch several thousands of jobs.
 
 ## Compute request
 
 ### Code details
 
-As with most emerging problems in ecology, there is no ready-made code that we can deploy. Everything we use is written in-house. To achieve maximal performance, we will use the Julia programming language (see next section). All code produced by the group will be released under non-viral FOSS licenses (BSD-2 or MPL).
+As with most emerging problems in ecology, there is no ready-made code that we can deploy. Everything we use is written in-house. To achieve maximal performance, we will use the Julia programming language (see next section). All code produced by the group will be released under the MIT license.
+
+The code will be co-developped by a MSc student and I. I have extensive experience in developping software for the analysis of ecological networks. In terms of training, I will let the student write the code, review it, and iterate until we have a finished product. Julia is conducive to this approach -- it offers C-like performance with python-like syntax, so even students with minimal programming abilities can rapidly be productive.
 
 ### Code performance and utilization
 
-Our code will be written at 90% in Julia (performance-blocking parts will be re-written in C or LLVM-optimized assembler. Julia is architecture agnostic, and can spawn instance on multiple cores within a node. As we use in-house code, we will rely extensively on continuous integration, code coverage analysis, and exhaustive unit-testing. We will conduct scaling efficiency tests before deploying the code on the Compute Canada machines. That being said, embarassingly parallel problems tend to scale embarassingly well.
+Our code will be written at 90% in Julia (performance-blocking parts will be re-written in C or LLVM-optimized assembler). Julia is architecture agnostic, and can spawn instance on multiple cores within a node, thus allowing us to leverage the Calcul Quebec architecture.
 
+As we use in-house code, we will rely extensively on continuous integration, code coverage analysis, and exhaustive unit-testing. We will conduct scaling efficiency tests before deploying the code on the Compute Canada machines. That being said, embarassingly parallel problems tend to scale embarassingly well.
 
+This project will allow me to train the student in best practices in software engineering -- version control, test-driven development, continuous integration. These are skills that are almost never taught in university courses, despite being extremely valuable as soon as software is involved.
 
 ### Size of request
 
@@ -41,6 +49,8 @@ I have access to the HPC cluster of the Universite du Quebec a Rimouski. It will
 This allocation is needed so that this particularly demanding project will not eat through the default allocation, that will be use by visiting students and colleagues to do routine simulations and data analysis.
 
 ### Impact of a cut
+
+Minimal: the analyses will mostly involve very short bursts of very intense resource use -- if less resources are available, the bursts will be slightly longer. However, should they become unreasonably so, I will move this project to a cloud HPC provider.
 
 ## Storage request
 
