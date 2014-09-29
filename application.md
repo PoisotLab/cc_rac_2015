@@ -6,6 +6,12 @@ Interactions between species support most of ecosystem services and properties. 
 
 **Research problem**
 
+Species interactions form the backbone on ecosystems. Recent empirical and theoretical results show that from knowledge of species interactions, one can notably predict ecosystem functions, potential for coexistence, and resilience to invasion. Yet ecologists have often neglected the fact that species interactions vary over time, and space. There are well described examples of this; juvenile fishes may be preys of larger species, that they will later consume when they have grown enough; bacteria can have no effect on healthy hosts, but become pathogenic when the host immunity is compromised. In all ecological communities that have been studied for variation of species interactions so far, variation of species interactions was found. This calls for the investigation of two questions: *why* and *how* do interactions vary -- or, can we pick up statistical signal in their variability --, and *what is the relevance* of this variation for ecosystem properties.
+
+The research projects for which I submit this application will focus on the following question: *how does the spatial variation of species presence/absence interacts with the spatial variation of species interactions to determine local community structure*. Some of my previous research showed that (i) there is no relationship between the drivers of species distribution and of interactions distributions and (ii) some ecological systems vary at higher rates than other as a function of the lifestyle of organisms. Empirical work -- either the collection of new data, or the re-analysis of existing datasets -- has been hampered by the fact that there is currently no statistical framework to adress these questions; while it is possible to *describe* the variation of species interactions, *testing* how significant it is from chance expectation cannot be done for lack of proper methodology.
+
+
+
 **Methodology**
 
 **Timeline**
