@@ -16,7 +16,7 @@ Null models -- describe
 
 Using spatially or temporally replicated species interaction networks, we will first implement efficient species distribution and species interaction null models. Some of my previous research suggested that (i) species interaction networks are intrinsically hard (computationaly) to randomize, requiring to develop efficient permutation strategies, and (ii) there is a long tail of un-commonly observed / un-commonly interacting species, requiring exhaustive sampling of the parameter space to properly capture.
 
-In additio, because the observation of species interaction networks (locally) is the result of several ecological processes (joint absence of species, then interaction), there is a need to implement different scenarios for analysis.
+In addition, because the observation of species interaction networks (locally) is the result of several ecological processes (joint absence of species, then interaction), there is a need to implement different scenarios for analysis.
 
 **Timeline**
 
@@ -32,13 +32,28 @@ The problem we tackle is by design embarassingly parallel: each replicate of eac
 
 As with most emerging problems in ecology, there is no ready-made code that we can deploy. Everything we use is written in-house. To achieve maximal performance, we will use the Julia programming language (see next section). All code produced by the group will be released under the MIT license.
 
-The code will be co-developped by a MSc student and I. I have extensive experience in developping software for the analysis of ecological networks. In terms of training, I will let the student write the code, review it, and iterate until we have a finished product. Julia is conducive to this approach -- it offers C-like performance with python-like syntax, so even students with minimal programming abilities can rapidly be productive.
+The code will be co-developped by a MSc student and I. I have extensive experience in developping software for the analysis of ecological networks, with a particular focus on code efficiency for large datasets (millions of interations). In terms of training, I will let the student write the code, review it, and iterate until we have a finished product. Julia is conducive to this approach -- it offers C-like performance with python-like syntax, so even students with minimal programming abilities can rapidly be productive and deliver code with good runtime and resource usage.
+
+Our code will perform the following tasks:
+
+1. Take a spatially aggregated dataset, most likely as an annotated edge list (`location;node1;node2`).
+2. These data will be splitted into different blocks (*e.g.* either within `location`, withing values of `node1`, within `node1;node2` unique pairs, etc) in accordance with the ecological hypotheses.
+3. Within these blocks, the data will be shuffled.
+4. The reconstructed dataset will undego a series of checks: all interactions must be unique locally, the statistical properties of the original networks must be respected, etc.
+5. Randomized datasets that pass the check will be accepted.
+
+Steps 3-5 will be repeated until $10^4$ replicates of each $10^1$ models will have been generated for each $10^3$ networks. Some of my preliminary tests revealed that
+
+1. Using permutations on the annotated edge list decreased the number of rejected samples when compared to the usual successive Bernoulli trials of probabilisitc graphs.
+2. Generating each replicate takes on average 5 seconds.
+
+Using the estimates of number of models, networks, and replicates given above, this project should consume 16 core/years. 
 
 ### Code performance and utilization
 
-Our code will be written at 90% in Julia (performance-blocking parts will be re-written in C or LLVM-optimized assembler). Julia is architecture agnostic, and can spawn instance on multiple cores within a node, thus allowing us to leverage the Calcul Quebec architecture.
+Our code will be written at 90+% in Julia (performance-blocking parts will be re-written in C or machine-optimized assembler). Julia is architecture agnostic, and can spawn instance on multiple cores within a node, thus allowing us to leverage the Calcul Quebec parallel architecture.
 
-As we use in-house code, we will rely extensively on continuous integration, code coverage analysis, and exhaustive unit-testing. We will conduct scaling efficiency tests before deploying the code on the Compute Canada machines. That being said, embarassingly parallel problems tend to scale embarassingly well.
+As we use in-house code, we will rely extensively on continuous integration, code coverage analysis, and exhaustive unit-testing. We will conduct scaling efficiency tests before deploying the code on the Compute Canada machines. That being said, embarassingly parallel problems tend to scale embarassingly well, and I routinely achieve close to linear speedup for large datasets (smaller datasets scale less well as IO become limiting).
 
 This project will allow me to train the student in best practices in software engineering -- version control, test-driven development, continuous integration. These are skills that are almost never taught in university courses, despite being extremely valuable as soon as software is involved.
 
@@ -50,8 +65,10 @@ This allocation is needed so that this particularly demanding project will not e
 
 ### Impact of a cut
 
-Minimal: the analyses will mostly involve very short bursts of very intense resource use -- if less resources are available, the bursts will be slightly longer. However, should they become unreasonably so, I will move this project to a cloud HPC provider.
+Minimal: the analyses will involve very short bursts of very intense resource use -- if less resources are available, the bursts will be slightly longer, or distributed across several machines.
 
 ## Storage request
 
 None needed.
+
+Data will be curated locally, and send to the cluster in pre-formated form. Datasets are typically less than a few MiB, and the output is usually around 1-5 GiB. Output files will be downloaded back to our machines for further treatment, and removed from the cluster.
