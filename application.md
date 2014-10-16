@@ -36,7 +36,8 @@ December - data analysis and preparation of the manuscript (no anticipated resou
 
 1. Develop a series of null models to understand the ecological mechanisms acting on the spatial structure of species interaction networks
 2. Use ABC to allow model selection and evaluate the contribution of different sets of mechanisms to the data structure
-3. Write a software note detailing our approach with use cases
+3. Write a software note detailing our approach, with use cases
+4. Train one MSc student into applications of HPC for large datasets in community ecology and biogeography
 
 # Technical justification
 
